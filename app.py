@@ -6,6 +6,7 @@ from numpy import array, sqrt
 import heapq
 from PIL import Image, ImageDraw, ImageOps
 import io
+import streamlit as st
 
 
 class ImageSeg:
