@@ -193,86 +193,25 @@ class OptimalPathing:
 
 # Streamlit app
 def main():
+    st.title("Pathfinding")
+
     st.markdown("""
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .upload-container {
-            background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 40px auto;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-        }
-        h1 {
-            color: #333333;
-        }
-        .upload-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .image-file {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            width: 100%;
-            max-width: 400px;
-        }
-        .button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover {
-            background-color: #218838;
-        }
-        .loading {
-            display: none;
-            margin: 20px;
-        }
-        .loading img {
-            width: 50px;
-            height: 50px;
-        }
-        .result {
-            display: none;
-            margin: 20px;
-        }
-        .result h2 {
-            color: #333333;
-        }
-        .result-img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+        .css-18e3th9 {text-align: center;}
+        .css-1y4e2o0 {max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
+        .css-1r4vok0 {border: 1px solid #cccccc; border-radius: 4px; padding: 10px; margin: 20px 0;}
+        .css-1t7c77j {background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease;}
+        .css-1t7c77j:hover {background-color: #218838;}
+        .css-1l3kk1g {border: 1px solid #cccccc; border-radius: 4px; max-width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("Pathfinding")
-
+    st.markdown('<div class="css-1y4e2o0">', unsafe_allow_html=True)
+    
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
     if uploaded_file:
-        st.markdown('<div class="upload-container">', unsafe_allow_html=True)
         st.write("Image uploaded successfully!")
-        st.markdown('</div>', unsafe_allow_html=True)
         image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
         img_array = array(image)
 
@@ -284,11 +223,12 @@ def main():
         result_img = obj.ComputeDjikstra()
 
         # Display the result
-        st.markdown('<div class="result">', unsafe_allow_html=True)
-        st.image(result_img, caption="Processed Image", use_column_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.image(result_img, caption="Processed Image", use_column_width=True, classes="css-1l3kk1g")
     else:
         st.write("Please upload an image.")
 
+    st.markdown('</div>', unsafe_allow_html=True)
+
 if __name__ == '__main__':
     main()
+
