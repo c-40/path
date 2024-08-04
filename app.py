@@ -1,9 +1,8 @@
 import streamlit as st
-from numpy import array, sum, uint8
-import cv2
+from numpy import array
+import heapq
 from PIL import Image, ImageDraw, ImageOps
 import io
-import heapq
 from numpy import sqrt
 
 class OptimalPathing:
@@ -90,18 +89,21 @@ def main():
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
     if uploaded_file:
-        # Convert the uploaded file to an image
+        st.write("Image uploaded successfully!")
         image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
         img_array = array(image)
 
         # Create instance of OptimalPathing
         obj = OptimalPathing(img_array)
 
+        st.write("Computing Dijkstra's path...")
         # Compute Dijkstra's path
         result_img = obj.ComputeDjikstra()
 
         # Display the result
         st.image(result_img, caption="Processed Image", use_column_width=True)
+    else:
+        st.write("Please upload an image.")
 
 if __name__ == '__main__':
     main()
