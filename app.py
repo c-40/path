@@ -84,7 +84,7 @@ class OptimalPathing:
 
 # Streamlit app
 def main():
-    st.title("Pathfinding and Image Segmentation")
+    st.title("Pathfinding")
 
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
