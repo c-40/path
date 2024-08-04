@@ -1,65 +1,10 @@
+import streamlit as st
 from numpy import array, sum, uint8
-from skimage import io, color
 import cv2
-from flask import Flask, request, render_template, send_file
-from numpy import array, sqrt
-import heapq
 from PIL import Image, ImageDraw, ImageOps
 import io
-import streamlit as st
-
-
-class ImageSeg:
-    def __init__(self, path):
-        self.path = path
-        self.img = io.imread(path)
-        self.threshold = 0
-
-    def visualize_rgb(self):
-        rgb_img = self.img
-        img = Image.fromarray((rgb_img * 255).astype(uint8))  # Convert float image to 8-bit for display
-        img.show()
-
-    def RGNull(self):
-        arr = array(self.img)
-        greenval = 0
-        count = 0
-        for i in range(len(arr)):
-            for j in range(len(arr[i])):
-                count += 1
-                greenval += arr[i][j][1]
-                arr[i][j][0] = 0
-                arr[i][j][2] = 0
-        self.threshold = (greenval / count) / 1.5
-        return arr
-
-    def IsoGray(self):
-        RGNull_img = self.RGNull()
-        gray_img = cv2.cvtColor(RGNull_img, cv2.COLOR_RGB2GRAY)
-        return gray_img
-
-    def IsoGrayThresh(self):
-        gray_img = self.IsoGray()
-        thresh_img = (gray_img > self.threshold) * 255
-        img = Image.fromarray(thresh_img.astype(uint8))  # Convert array to image
-        img.show()
-        return thresh_img
-
-    def visualize_compare(self):
-        rgb_img = Image.fromarray((self.img * 255).astype(uint8))
-        gray_img = Image.fromarray(self.IsoGray().astype(uint8))
-        thresh_img = Image.fromarray(self.IsoGrayThresh().astype(uint8))
-
-        rgb_img.show(title="RGB Image")
-        gray_img.show(title="Grayscale Image")
-        thresh_img.show(title="Thresholded Image")
-
-    def PixelCount(self):
-        count = 0
-        arr = self.IsoGrayThresh()
-        count = sum(arr != 0)
-        return count
-
+import heapq
+from numpy import sqrt
 
 class OptimalPathing:
     def __init__(self, img):
@@ -137,7 +82,6 @@ class OptimalPathing:
         img_bytes.seek(0)
 
         return img_bytes
-
 
 # Streamlit app
 def main():
