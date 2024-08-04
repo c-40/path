@@ -139,24 +139,25 @@ class OptimalPathing:
         return img_bytes
 
 
-app = Flask(__name__)
+# Streamlit app
+def main():
+    st.title("Pathfinding and Image Segmentation")
 
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['image']
-    if file:
-        image = Image.open(file).convert('L')  # Convert to grayscale
+    if uploaded_file:
+        # Convert the uploaded file to an image
+        image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
         img_array = array(image)
-        obj = OptimalPathing(img_array)
-        result_img = obj.ComputeDjikstra()
-        return send_file(result_img, mimetype='image/png')
 
+        # Create instance of OptimalPathing
+        obj = OptimalPathing(img_array)
+
+        # Compute Dijkstra's path
+        result_img = obj.ComputeDjikstra()
+
+        # Display the result
+        st.image(result_img, caption="Processed Image", use_column_width=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
